@@ -7,6 +7,7 @@ __version__ = "0.3.0"
 from .scraper import TrendScraper
 from .sentiment import SentimentAnalyzer
 
+
 class SentimentResult:
     """Wrapper for sentiment analysis result."""
     def __init__(self, data: dict):

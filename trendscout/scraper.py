@@ -1,29 +1,29 @@
-import requests
-import pandas as pd
-from typing import List, Dict
 import random
+
+import pandas as pd
+
 
 class TrendScraper:
     """
     Scrapes trending topics from various sources.
     """
-    
+
     def __init__(self, use_mock: bool = True):
         self.use_mock = use_mock
-        
+
     def get_trends(self, topic: str = "technology") -> pd.DataFrame:
         """
         Get trending articles/posts about a topic.
-        
+
         Args:
             topic: Keyword to search
-            
+
         Returns:
             DataFrame with 'title', 'source', 'url', 'timestamp'
         """
         if self.use_mock:
             return self._mock_trends(topic)
-            
+
         # TODO: Implement real scraping logic here
         # For now, fallback to mock
         return self._mock_trends(topic)
@@ -37,9 +37,9 @@ class TrendScraper:
             f"Investors are flocking to {topic}",
             f"{topic} crash imminent? Experts warn.",
         ]
-        
+
         sources = ["TechCrunch", "Bloomberg", "Reuters", "The Verge", "Wired"]
-        
+
         data = []
         for t in titles:
             data.append({
@@ -48,5 +48,5 @@ class TrendScraper:
                 "url": f"https://example.com/{random.randint(1000,9999)}",
                 "timestamp": pd.Timestamp.now()
             })
-            
+
         return pd.DataFrame(data)
