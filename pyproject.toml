@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "trendscout"
+version = "0.3.0"
+description = "AI-Powered Market Trend Analysis & Sentiment"
+readme = "README.md"
+authors = [
+    { name = "Teyfik OZ", email = "teyfikoz@yahoo.com" }
+]
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+keywords = ["trends", "sentiment", "market-analysis", "nlp", "scraping"]
+requires-python = ">=3.10"
+dependencies = [
+    "beautifulsoup4>=4.12.0",
+    "pandas>=2.0.0",
+    "requests>=2.31.0",
+    "textblob>=0.17.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "ruff>=0.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/teyfikoz/trendscout"
+Repository = "https://github.com/teyfikoz/trendscout"
+Issues = "https://github.com/teyfikoz/trendscout/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["trendscout*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
