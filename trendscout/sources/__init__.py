@@ -1,0 +1,1 @@
+# TrendScout sources package

@@ -4,15 +4,15 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "trendscout"
-version = "0.3.0"
-description = "AI-Powered Market Trend Analysis & Sentiment"
+version = "1.0.0"
+description = "Real-time trend intelligence with HackerNews, RSS feeds, trend velocity, and multi-domain sentiment"
 readme = "README.md"
 authors = [
     { name = "Teyfik OZ", email = "teyfikoz@yahoo.com" }
 ]
 license = {text = "MIT"}
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
