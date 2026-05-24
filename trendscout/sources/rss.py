@@ -137,12 +137,12 @@ class RSSFeedSource:
                 channel = root.find("channel") or root
                 for item_el in channel.findall("item")[:limit]:
                     t = item_el.find("title")
-                    l = item_el.find("link")
+                    lnk = item_el.find("link")
                     d = item_el.find("description")
                     p = item_el.find("pubDate")
                     items.append(RSSItem(
                         title=(t.text or "").strip() if t is not None else "",
-                        url=(l.text or "").strip() if l is not None else "",
+                        url=(lnk.text or "").strip() if lnk is not None else "",
                         description=((d.text or "").strip()[:200]) if d is not None else "",
                         published=(p.text or "") if p is not None else "",
                         feed_name=feed_name,
