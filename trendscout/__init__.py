@@ -2,7 +2,7 @@
 TrendScout v1.0.0 — Real-time trend intelligence with HackerNews, RSS, and multi-domain sentiment.
 """
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 from typing import Optional
 

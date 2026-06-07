@@ -134,7 +134,8 @@ class RSSFeedSource:
                     ))
             else:
                 # RSS 2.0
-                channel = root.find("channel") or root
+                channel_el = root.find("channel")
+                channel = channel_el if channel_el is not None else root
                 for item_el in channel.findall("item")[:limit]:
                     t = item_el.find("title")
                     lnk = item_el.find("link")

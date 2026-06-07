@@ -3,6 +3,7 @@
 **Real-time trend intelligence** — HackerNews search, RSS feed parsing, trend velocity scoring, and multi-domain sentiment analysis. No API key required.
 
 [![PyPI version](https://badge.fury.io/py/trendscout.svg)](https://pypi.org/project/trendscout/)
+[![Build](https://github.com/teyfikoz/trendscout/actions/workflows/publish.yml/badge.svg)](https://github.com/teyfikoz/trendscout/actions/workflows/publish.yml)
 [![CI](https://github.com/teyfikoz/trendscout/actions/workflows/ci.yml/badge.svg)](https://github.com/teyfikoz/trendscout/actions/workflows/ci.yml)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
