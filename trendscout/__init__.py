@@ -11,6 +11,7 @@ import pandas as pd
 
 from .scraper import TrendScraper
 from .sentiment import SentimentAnalyzer, SentimentResult
+from .sources.github_trending import GitHubRepo, GitHubTrendingSource
 from .velocity import TrendVelocity, VelocityResult
 
 
@@ -69,7 +70,6 @@ class TrendScout:
         return self._rss
 
     def _get_github(self, token: str | None = None):
-        from .sources.github_trending import GitHubTrendingSource
         return GitHubTrendingSource(token=token)
 
     # ── Trend fetching ─────────────────────────────────────────────────────────
@@ -262,10 +262,10 @@ class TrendScout:
 __all__ = [
     "TrendScout",
     "TrendScraper",
+    "GitHubTrendingSource",
+    "GitHubRepo",
     "SentimentAnalyzer",
     "SentimentResult",
     "TrendVelocity",
     "VelocityResult",
 ]
-
-from .sources.github_trending import GitHubRepo, GitHubTrendingSource  # noqa: E402
