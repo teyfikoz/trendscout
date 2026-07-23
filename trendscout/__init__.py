@@ -1,8 +1,9 @@
 """
-TrendScout v1.0.0 — Real-time trend intelligence with HackerNews, RSS, and multi-domain sentiment.
+TrendScout v1.2.0 — Real-time trend intelligence with HackerNews, RSS, GitHub Trending,
+and multi-domain sentiment.
 """
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 
 from typing import Optional
 
@@ -67,6 +68,10 @@ class TrendScout:
             self._rss = RSSFeedSource()
         return self._rss
 
+    def _get_github(self, token: str | None = None):
+        from .sources.github_trending import GitHubTrendingSource
+        return GitHubTrendingSource(token=token)
+
     # ── Trend fetching ─────────────────────────────────────────────────────────
 
     def get_hackernews_trends(self, topic: str, limit: int = 20) -> pd.DataFrame:
@@ -111,6 +116,43 @@ class TrendScout:
         if not items:
             return pd.DataFrame(columns=["title", "url", "description", "published"])
         return pd.DataFrame([i.to_dict() for i in items])
+
+    def get_github_trending(
+        self,
+        language: str | None = None,
+        since: str = "daily",
+        limit: int = 25,
+        min_stars: int = 5,
+        token: str | None = None,
+    ) -> pd.DataFrame:
+        """
+        Fetch trending GitHub repositories created in the given time window.
+
+        Uses GitHub Search API — no authentication required (60 req/hr).
+        Optionally pass a ``token`` or set ``GITHUB_TOKEN`` env var for
+        5,000 req/hr.
+
+        Args:
+            language: Filter by programming language (e.g. ``"python"``,
+                      ``"typescript"``). ``None`` returns all languages.
+            since: Time window — ``"daily"``, ``"weekly"``, or ``"monthly"``.
+            limit: Max repositories to return (capped at 100 by the API).
+            min_stars: Minimum star count filter.
+            token: Optional GitHub personal access token.
+
+        Returns:
+            DataFrame with columns: name, full_name, description, url,
+            stars, forks, language, created_at, topics, source.
+        """
+        repos = self._get_github(token=token).fetch(
+            language=language, since=since, limit=limit, min_stars=min_stars
+        )
+        if not repos:
+            return pd.DataFrame(
+                columns=["name", "full_name", "description", "url", "stars",
+                         "forks", "language", "created_at", "topics", "source"]
+            )
+        return pd.DataFrame([r.to_dict() for r in repos])
 
     def get_emerging_trends(self, domain: str = "general", limit: int = 5) -> pd.DataFrame:
         """
@@ -225,3 +267,5 @@ __all__ = [
     "TrendVelocity",
     "VelocityResult",
 ]
+
+from .sources.github_trending import GitHubRepo, GitHubTrendingSource  # noqa: E402

@@ -6,7 +6,7 @@ import pytest
 
 def test_version():
     import trendscout
-    assert trendscout.__version__ == "1.1.0"
+    assert trendscout.__version__ == "1.2.0"
 
 
 def test_all_exports():
@@ -456,3 +456,41 @@ def test_trendscout_emerging_trends_exception_fallback(monkeypatch):
     monkeypatch.setattr(ts, "get_hackernews_trends", raise_exc)
     result = ts.get_emerging_trends(domain="ai", limit=3)
     assert isinstance(result, pd.DataFrame)
+
+
+# ── GitHub Trending ───────────────────────────────────────────────────────────
+
+def test_github_trending_source_import():
+    from trendscout.sources.github_trending import GitHubTrendingSource, GitHubRepo
+    src = GitHubTrendingSource()
+    assert src is not None
+
+
+def test_github_trending_empty_on_network_failure(monkeypatch):
+    """fetch() returns empty list when network is unavailable."""
+    from trendscout.sources.github_trending import GitHubTrendingSource
+    import requests
+
+    def _fail(*a, **kw):
+        raise requests.exceptions.ConnectionError("offline")
+
+    monkeypatch.setattr(requests, "get", _fail)
+    src = GitHubTrendingSource()
+    repos = src.fetch(language="python", since="daily", limit=5)
+    assert repos == []
+
+
+def test_trendscout_get_github_trending_returns_dataframe(monkeypatch):
+    """get_github_trending returns a DataFrame (may be empty if offline)."""
+    import pandas as pd
+    from trendscout import TrendScout
+    import requests
+
+    def _fail(*a, **kw):
+        raise requests.exceptions.ConnectionError("offline")
+
+    monkeypatch.setattr(requests, "get", _fail)
+    ts = TrendScout()
+    df = ts.get_github_trending(language="python", since="daily", limit=5)
+    assert isinstance(df, pd.DataFrame)
+    assert set(["name", "url", "stars", "source"]).issubset(set(df.columns))
